@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJS Chat Application</title>
+    <!-- <link rel="stylesheet" href="public/CSS/chat.css"> -->
+    <link rel="stylesheet" href="/CSS/chat.css">
+</head>
+
+<body>
+
+    <h2>Chatting...</h2>
+
+    <div class="container">
+        <div class="left">
+            <h3>Users</h3>
+            <div>
+                <ul class="listPeople">
+                    <li>Aparna Tijo</li>
+                    <li>Sanjana Velma</li>
+                </ul>
+            </div>
+        </div>
+    
+        <div class="right">
+            <div id="outMessage"></div>
+            <input type="text" id="inMessage">
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+
+
+    <!--todo: JAVASCRIPT Part  -->
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const inMessage = document.getElementById("inMessage");
+        const outMessage = document.getElementById("outMessage");
+        const sendBtn = document.getElementById("sendBtn");
+
+        sendBtn.addEventListener("click", (e) => {
+            socket.emit("user1-message", inMessage.value);
+        })
+
+        socket.on('client1-message', (message) => {
+            const p = document.createElement("p");
+            p.innerText = message;
+            outMessage.appendChild(p);
+        })
+
+    </script>
+</body>
+
+</html>
